@@ -9,9 +9,10 @@
         xmlns:local="clr-namespace:Shutdown"
         mc:Ignorable="d"
         Title="Shutdown"
-        Height="350"
         Icon="/Images/clock.png"
-        Width="525">
+        Width="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" SizeToContent="WidthAndHeight">
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
@@ -21,17 +22,12 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <GroupBox Header="{x:Static r:App.Power}" Grid.Row="0" Grid.Column="0">
-            <Grid>
-                <Grid.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="Margin" Value="10" />
-                    </Style>
-                </Grid.Resources>
+            <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -111,8 +107,10 @@
                         Grid.Row="2" />
             </Grid>
         </GroupBox>
-        <GroupBox Header="{x:Static r:App.Confirmation}" Grid.Row="2" Grid.Column="1">
-            <Grid>
+        <GroupBox Header="{x:Static r:App.Confirmation}"
+                  Grid.Row="2"
+                  Grid.Column="1">
+            <Grid VerticalAlignment="Center" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
