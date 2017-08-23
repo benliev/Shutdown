@@ -12,7 +12,7 @@
         Icon="/Images/clock.png"
         Width="500"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+        ResizeMode="NoResize" SizeToContent="Height">
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>

@@ -11,7 +11,7 @@
         <Style TargetType="local:IntegerTextBox">
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="34" />
+            <Setter Property="FontSize" Value="24" />
         </Style>
     </UserControl.Resources>
     <Grid VerticalAlignment="Center">
