@@ -5,9 +5,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Shutdown.ViewModels
@@ -16,7 +18,7 @@ namespace Shutdown.ViewModels
     {
 
         #region fields
-
+        const string ShutdownPath = "C:\\Windows\\System32\\shutdown";
         bool _isEnabledClosureTime = true;
         TimeSpan _nowTime;
         TimeSpan _remainingTime;
@@ -147,8 +149,15 @@ namespace Shutdown.ViewModels
         /// <param name="e">the event</param>
         private void RemainingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (RemainingTime.TotalMilliseconds == 0) Shutdown();
-            else RemainingTime -= new TimeSpan(0, 0, 1);
+            if (RemainingTime.TotalMilliseconds <= 0)
+            {
+                RemainingTimer.Enabled = false;
+                Shutdown();
+            }
+            else
+            {
+                RemainingTime -= new TimeSpan(0, 0, 1);
+            }
         }
 
         /// <summary>
@@ -177,12 +186,12 @@ namespace Shutdown.ViewModels
         /// <summary>
         /// Shutdown the computer
         /// </summary>
-        void Shutdown() => Process.Start("shutdown", "/s /t 0");
+        void Shutdown() => Process.Start(ShutdownPath, "-s -t 0");
 
         /// <summary>
         /// Restart the computer
         /// </summary>
-        void Restart() => Process.Start("shutdown", "/r /t 0");
+        void Restart() => Process.Start(ShutdownPath, "-r -t 0");
 
         /// <summary>
         /// Can confirm check if the remaining time is not enabled and if closure time
