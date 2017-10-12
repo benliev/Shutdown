@@ -16,8 +16,25 @@ namespace Shutdown.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        #region Shortcuts
+
+        public TimeSpan[] Shortcuts { get; } = new TimeSpan[]
+        {
+            new TimeSpan(0, 10, 0),
+            new TimeSpan(0, 15, 0),
+            new TimeSpan(0, 30, 0),
+            new TimeSpan(1, 0, 0),
+            new TimeSpan(2, 0, 0),
+            new TimeSpan(3, 0, 0),
+            new TimeSpan(4, 0, 0),
+            new TimeSpan(5, 0, 0),
+            new TimeSpan(6, 0, 0),
+        };
+
+        #endregion
 
         #region fields
+
         const string ShutdownPath = "C:\\Windows\\System32\\shutdown";
         bool _isEnabledClosureTime = true;
         TimeSpan _nowTime;
@@ -122,19 +139,19 @@ namespace Shutdown.ViewModels
             ResetCommand = new RelayCommand(Reset, CanReset);
             ShutdownCommand = new RelayCommand(Shutdown);
             RebootCommand = new RelayCommand(Restart);
-            SetRemainingTimeCommand = new RelayCommand<string>(SetRemainingTime);
+            SetRemainingTimeCommand = new RelayCommand<TimeSpan>(SetRemainingTime);
 
-            // Set the now time
+            // Construct the Now timer and enabled it
             NowTime = DateTime.Now.TimeOfDay;
-
+            NowTimer = new Timer(1000);
+            NowTimer.Elapsed += NowTimer_Elapsed;
+            NowTimer.Enabled = true;
+            
             // Construct the Remaining Timer
             RemainingTimer = new Timer(1000);
             RemainingTimer.Elapsed += RemainingTimer_Elapsed;
 
-            // Construct the Now timer and enabled it
-            NowTimer = new Timer(1000);
-            NowTimer.Elapsed += NowTimer_Elapsed;
-            NowTimer.Enabled = true;
+            
         }
 
         #endregion
@@ -232,17 +249,11 @@ namespace Shutdown.ViewModels
         /// Change the remaining time
         /// </summary>
         /// <param name="minutes">the number of minutes to set to the remaining time</param>
-        void SetRemainingTime(int minutes)
+        void SetRemainingTime(TimeSpan time)
         {
-            ClosureTime = DateTime.Now.TimeOfDay + new TimeSpan(0, minutes, 0);
+            ClosureTime = DateTime.Now.TimeOfDay + time;
             Confirm();
         }
-
-        /// <summary>
-        /// Change the remaining time
-        /// </summary>
-        /// <param name="minutes">the number of minutes to parse to set to the remaining time</param>
-        void SetRemainingTime(string minutes) => SetRemainingTime(int.Parse(minutes));
 
         #endregion
     }
