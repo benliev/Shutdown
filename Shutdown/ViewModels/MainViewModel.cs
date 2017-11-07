@@ -29,7 +29,7 @@ namespace Shutdown.ViewModels
 
         #region fields
 
-        const string ShutdownPath = "C:\\Windows\\System32\\shutdown";
+        const string ShutdownPath = @"C:\Windows\System32\shutdown";
         bool _isEnabledClosureTime = true;
         TimeSpan _nowTime;
         TimeSpan _remainingTime;
@@ -143,9 +143,7 @@ namespace Shutdown.ViewModels
             
             // Construct the Remaining Timer
             RemainingTimer = new Timer(1000);
-            RemainingTimer.Elapsed += RemainingTimer_Elapsed;
-
-            
+            RemainingTimer.Elapsed += RemainingTimer_Elapsed;        
         }
 
         #endregion
